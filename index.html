@@ -256,9 +256,11 @@
 		                       		.append("text")
 		                       		.text(function(d){ return formatSales(d);})
 		                       		.attr({
-		                       			x: function(d,i){ return (w-(margin.left/2))*i;},
+		                       			x: function(d,i){ 
+											   if (i ==0) return 0;
+											   else return (w-(margin.left/2))*i-20;},
 		                       			y: h-150,		         
-		                       			"font-size":"9px",
+		                       			"font-size":"12px",
 		                       			"font-family":"sans-serif"              			
 		                       		});
 		            
