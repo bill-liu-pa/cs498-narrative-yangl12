@@ -6,7 +6,7 @@
     </head>
     <body>
 
-    	<h1 id="dashTitle">2013 Sales Dashboard</h1>
+    	<h1 id="dashTitle">Covid-19 Dashboard</h1>
 
     	<div id="topChart" style="float: left; width: 800px;">
 			<h2 style="margin-left:50px; float:left;">Sales by Month (colored by profit)</h1>				
@@ -17,7 +17,7 @@
 	    <div id="bottomLeft" style="float:left; width: 350px; margin-left: 50px;"></div>
 
 	    <div id="bottomRight" style="float:left; width: 400px;">
-	    	<h2>Sales by State</h2>	    	    		
+	    	<h2>Cases by State</h2>	    	    		
 	    </div>
     
 	    <!-- global functions -->
@@ -138,7 +138,7 @@
 		            d3.csv("2013-state-sales.csv", function(data) {
 
 		                //Set input domain for color scale
-		                color.domain([0,d3.max(data, function(d) { return d.sales; })]);
+		                color.domain([0,d3.max(data, function(d) { return d.positive; })]);
 
 		                //Load in GeoJSON data
 		                d3.json("us.json", function(json) {
@@ -151,7 +151,7 @@
 		                        var dataState = data[i].state;
 		                        
 		                        //Grab data value, and convert from string to float
-		                        var dataValue = parseFloat(data[i].sales);
+		                        var dataValue = parseFloat(data[i].positive);
 		                
 		                        //Find the corresponding state inside the GeoJSON
 		                        for (var j = 0; j < json.features.length; j++) {
@@ -203,7 +203,7 @@
 		                                .style("opacity", .9);      
 
 		                            var tip = "<strong>" + d.properties.NAME + "</strong><br/>"
-		                            var tip = tip + "<strong>Sales:</strong> $" + formatSales(d.properties.value) + "<br/>";
+		                            var tip = tip + "<strong>Cases:</strong>" + formatSales(d.properties.value) + "<br/>";
 
 		                            mapTooltip.html(tip)  
 		                                .style("left", (d3.event.pageX) + "px")     
