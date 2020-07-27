@@ -117,8 +117,8 @@
 
 		            
 		            var projection = d3.geo.albersUsa()
-                                   .translate([w+10, (h/2)-80])
-                                   .scale([h+50]);
+                                   .translate([w/2+10, (h/2)-80])
+                                   .scale([800 - margin.left - margin.right]);
 
 		            
 		            var path = d3.geo.path()
