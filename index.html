@@ -326,7 +326,7 @@
 
 
 		            //Load in Sales Data
-		            d3.csv("us-states-covid.csv", function(data) {
+		            d3.csv("2013-state-sales.csv", function(data) {
 
 		                //Set input domain for color scale
 		                color.domain([0,d3.max(data, function(d) { return d.sales; })]);
