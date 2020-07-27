@@ -1,276 +1,201 @@
 <html>
-    <head>
-    	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-    	<link href='style.css' rel='stylesheet' type='text/css'>
-        <script src="d3.v3.js" charset="utf-8"></script>   
-    </head>
-    <body>
+  <head>
+    <link
+      href="http://fonts.googleapis.com/css?family=Open+Sans"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <script src="d3.v3.js" charset="utf-8"></script>
+  </head>
+  <body>
+    <h1 id="dashTitle">Covid-19 Dashboard</h1>
 
-    	<h1 id="dashTitle">Covid-19 Dashboard</h1>
+    <div id="bottomChart" style="float: left; width: 800px;">
+      <h2>Cases by State</h2>
+    </div>
 
-    	<div id="topChart" style="float: left; width: 800px;">
-			<h2 style="margin-left:50px; float:left;">Sales by Month (colored by profit)</h1>				
-			<svg id="barChartLegend"></svg>
-	    	<svg id="barChart"></svg>
-	    </div>
+    <!-- global functions -->
+    <script>
+      function formatSales(d) {
+        var prefix = d3.formatPrefix(d);
+        var num = prefix.scale(d).toFixed();
+        var re = num + prefix.symbol;
+        console.log(re);
+        return re;
+      }
 
-	   
-		
-		<div id="bottomChart" style="float: left; width: 800px;">
-	    	<h2>Cases by State</h2>	    	    		
-	    </div>
-    
-	    <!-- global functions -->
-	    <script>	   
-			function formatSales(d){
-    			var prefix = d3.formatPrefix(d);
-				var num =  prefix.scale(d).toFixed();	
-				var re = num+prefix.symbol		
-				console.log(re)			    			
-    			return re;
-			}
-
-			function compareNums(a,b){
-				return a-b;
-			}
-
+      function compareNums(a, b) {
+        return a - b;
+      }
     </script>
 
+    <!-- build map -->
+    <script>
+      var margin = { top: 20, right: 30, bottom: 30, left: 40 },
+        w = 800 - margin.left - margin.right,
+        h = 600 - margin.top - margin.bottom;
 
+      var projection = d3.geo
+        .albersUsa()
+        .translate([w / 2 + 10, h / 2 - 80])
+        .scale([700]);
 
-    	
+      var path = d3.geo.path().projection(projection);
 
-        <!-- build sparklines -->
-    	<script>
-			
-	        function buildLine(ds) {
+      var color = d3.scale
+        .linear()
+        .range([
+          "rgb(254,229,217)",
+          "rgb(252,174,145)",
+          "rgb(251,106,74)",
+          "rgb(203,24,29)",
+        ]);
 
+      //Create SVG element
+      var svg = d3
+        .select("#bottomChart")
+        .append("svg")
+        .attr("width", w)
+        .attr("height", h);
 
-	        	var margin = {top: 20, right: 30, bottom: 30, left: 40},
-				    w = 800 - margin.left - margin.right,
-				    h = 100 - margin.top - margin.bottom;
+      //Load in Sales Data
+      d3.csv("us-states-positive.csv", function (data) {
+        //Set input domain for color scale
+        color.domain([
+          0,
+          d3.max(data, function (d) {
+            return d.positive;
+          }),
+        ]);
 
-	            
-	            //scales
-	            var xScale = d3.scale.linear()
-	                        .domain([
-	                                    d3.min(ds.monthlySales, function(d){ return d.month;}) ,
-	                                    d3.max(ds.monthlySales, function(d){ return d.month;})
-	                                ])                
-	                        .range([0, w])
-	                        .nice();        
-	         
+        //Load in GeoJSON data
+        d3.json("us.json", function (json) {
+          //Merge the ag. data and GeoJSON
+          //Loop through once for each ag. data value
+          for (var i = 0; i < data.length; i++) {
+            //Grab state name
+            var dataState = data[i].state;
 
-	            var yScale = d3.scale.linear()
-	                        .domain([0, d3.max(ds.monthlySales, function(d){ return d.sales;})])
-	                        .range([h,0])
-	                        .nice();
-	         
-	            var lineFun = d3.svg.line()
-	                .x(function (d) {return xScale(d.month); } )
-	                .y(function (d) {return yScale(d.sales); })
-	                .interpolate("linear");
-	                
-	                
-	            var svg = d3.select("#topChart").append("svg").attr({ width:w, height:h});
-	            
-	            var viz = svg.append("path")
-	                        .attr({
-	                            d: lineFun(ds.monthlySales),
-	                            "stroke" : "#666666",
-	                            "stroke-width": 2,
-	                            "fill" : "none"
-	                        });
+            //Grab data value, and convert from string to float
+            var dataValue = parseFloat(data[i].positive);
 
-	            
-	        }
-	          
-	        //show header
-	        function showHeader(ds) {
-	            d3.select("#topChart").append("h2")
-	                .text(ds.category + " Sales Trend (2013)");
-	        }
-	        
-	        
-	        //get data and draw things  
-	        d3.json("2013-category-sales.json", function(error, data) {
-	           
-	           if(error) {
-	               console.log(error);               
-	           } 
-	            
-	            data.contents.forEach(function(ds){                               
-	                showHeader(ds);
-	                buildLine(ds);                    
-	            })
-	            
-	        });  
-        </script>
+            //Find the corresponding state inside the GeoJSON
+            for (var j = 0; j < json.features.length; j++) {
+              var jsonState = json.features[j].properties.NAME;
 
-        <!-- build map -->
-        <script>
+              if (dataState == jsonState) {
+                json.features[j].properties.value = dataValue;
+                break;
+              }
+            }
+          }
 
+          //add tooltip
+          var mapTooltip = d3
+            .select("body")
+            .append("div")
+            .attr("class", "tooltip")
+            .attr("id", "mapTooltip")
+            .style("opacity", 0);
 
-				var margin = {top: 20, right: 30, bottom: 30, left: 40},
-				    w = 800 - margin.left - margin.right,
-				    h = 400 - margin.top - margin.bottom;
+          //add legend
 
-		            
-		            var projection = d3.geo.albersUsa()
-                                   .translate([w/2+10, (h/2)-80])
-                                   .scale([700]);
+          //Build Map
+          svg
+            .selectAll("path")
+            .data(json.features)
+            .enter()
+            .append("path")
+            .attr("d", path)
+            .style("fill", function (d) {
+              //Get data value
+              var value = d.properties.value;
 
-		            
-		            var path = d3.geo.path()
-								.projection(projection);
-		                             
-		            var color = d3.scale.linear()				
-					.range(['rgb(254,229,217)','rgb(252,174,145)','rgb(251,106,74)','rgb(203,24,29)']);
+              if (value) {
+                //If value exists…
+                return color(value);
+              } else {
+                //If value is undefined…
+                return "#fff";
+              }
+            })
+            .on("mouseover", function (d) {
+              mapTooltip.transition().duration(500).style("opacity", 0.9);
 
-		                                
+              var tip = "<strong>" + d.properties.NAME + "</strong><br/>";
+              var tip =
+                tip +
+                "<strong>Cases:</strong>" +
+                formatSales(d.properties.value) +
+                "<br/>";
 
-		            //Create SVG element
-		            var svg = d3.select("#bottomChart")
-		                        .append("svg")
-		                        .attr("width", w)
-		                        .attr("height", h);
+              mapTooltip
+                .html(tip)
+                .style("left", d3.event.pageX + "px")
+                .style("top", d3.event.pageY - 28 + "px");
+            })
+            .on("mouseout", function (d) {
+              mapTooltip.transition().duration(500).style("opacity", 0);
+            });
 
+          //sort values for color legend
 
-		            //Load in Sales Data
-		            d3.csv("us-states-positive.csv", function(data) {
+          var legendData = [];
 
-		                //Set input domain for color scale
-		                color.domain([0,d3.max(data, function(d) { return d.positive; })]);
+          json.features.forEach(function (prop) {
+            var val = parseFloat(prop.properties.value);
 
-		                //Load in GeoJSON data
-		                d3.json("us.json", function(json) {
+            if (val) {
+              legendData.push(val);
+            }
+          });
 
-		                    //Merge the ag. data and GeoJSON
-		                    //Loop through once for each ag. data value
-		                    for (var i = 0; i < data.length; i++) {
-		                
-		                        //Grab state name
-		                        var dataState = data[i].state;
-		                        
-		                        //Grab data value, and convert from string to float
-		                        var dataValue = parseFloat(data[i].positive);
-		                
-		                        //Find the corresponding state inside the GeoJSON
-		                        for (var j = 0; j < json.features.length; j++) {
+          legendData.sort(function (a, b) {
+            return a - b;
+          });
 
-						            var jsonState = json.features[j].properties.NAME;
-		                
-		                            if (dataState == jsonState) {
-		                        
-		                                json.features[j].properties.value = dataValue;
-		                                break;
-		                                
-		                            }
-		                        }       
-		                    }
+          // add color legend
+          svg
+            .selectAll("rect")
+            .data(legendData)
+            .enter()
+            .append("rect")
+            .attr({
+              x: function (d, i) {
+                return i * (w / legendData.length);
+              },
+              y: h - 10,
+              width: function (d, i) {
+                return w / legendData.length;
+              },
+              height: 10,
+              fill: function (d) {
+                return color(d);
+              },
+            });
 
-		                    //add tooltip
-		                    var mapTooltip = d3.select("body").append("div")   
-							    .attr("class", "tooltip")               
-							    .attr("id", "mapTooltip")
-							    .style("opacity", 0);
+          // console.log([legendData[0],legendData[legendData.length-1]]);
 
-
-							 //add legend
-							
-				           
-
-		                    //Build Map
-		                    svg.selectAll("path")
-		                       .data(json.features)
-		                       .enter()
-		                       .append("path")
-		                       .attr("d", path)
-		                       .style("fill", function(d) {
-		                            //Get data value
-		                            var value = d.properties.value;
-		                            
-		                            if (value) {
-		                                //If value exists…
-		                                return color(value);
-		                            } else {
-		                                //If value is undefined…
-		                                return "#fff";
-		                            }
-		                       })
-               					.on("mouseover", function(d) {      
-
-		                            mapTooltip.transition()        
-		                                .duration(500)      
-		                                .style("opacity", .9);      
-
-		                            var tip = "<strong>" + d.properties.NAME + "</strong><br/>"
-		                            var tip = tip + "<strong>Cases:</strong>" + formatSales(d.properties.value) + "<br/>";
-
-		                            mapTooltip.html(tip)  
-		                                .style("left", (d3.event.pageX) + "px")     
-		                                .style("top", (d3.event.pageY - 28) + "px");    
-		                        })                  
-		                        .on("mouseout", function(d) {       
-
-		                            mapTooltip.transition()        
-		                                .duration(500)      
-		                                .style("opacity", 0);   
-		                        });
-
-
-		                        //sort values for color legend
-
-		                        var legendData=[];
-
-		                        json.features.forEach(function(prop){
-
-		                        	var val = parseFloat(prop.properties.value)
-
-		                        	if (val) {legendData.push(val);}
-
-		                        	
-		                        });
-
-		                        legendData.sort(function(a,b){ return a-b;});
-
-		                        // add color legend
-		                        svg.selectAll("rect")		                        	
-		                        	.data(legendData)
-		                        	.enter()
-		                        	.append("rect")
-		                        	.attr({
-										x: function(d, i) {return i * (w/legendData.length);},
-									    y: h-10,
-									    width: function(d,i){ return (w/legendData.length); },
-									    height: 10,
-									  	fill: function(d) { return color(d);}				                           
-		                       		});
-
-
-		                        	// console.log([legendData[0],legendData[legendData.length-1]]);
-
-		                       	svg.selectAll("text")
-		                       		.data([legendData[0],legendData[legendData.length-1]])
-		                       		.enter()
-		                       		.append("text")
-		                       		.text(function(d){ return formatSales(d);})
-		                       		.attr({
-		                       			x: function(d,i){ 
-											   if (i ==0) return 0;
-											   else return (w-(margin.left/2))*i-10;},
-		                       			y: h-20,		         
-		                       			"font-size":"12px",
-		                       			"font-family":"sans-serif"              			
-		                       		});
-		            
-		                });
-		            
-		            });
-
-
-        </script>
-
-
-    </body>
+          svg
+            .selectAll("text")
+            .data([legendData[0], legendData[legendData.length - 1]])
+            .enter()
+            .append("text")
+            .text(function (d) {
+              return formatSales(d);
+            })
+            .attr({
+              x: function (d, i) {
+                if (i == 0) return 0;
+                else return (w - margin.left / 2) * i - 10;
+              },
+              y: h - 20,
+              "font-size": "12px",
+              "font-family": "sans-serif",
+            });
+        });
+      });
+    </script>
+  </body>
 </html>
