@@ -241,7 +241,7 @@
 		                        	.append("rect")
 		                        	.attr({
 										x: function(d, i) {return i * (w/legendData.length);},
-									    y: h-440,
+									    y: h,
 									    width: function(d,i){ return (w/legendData.length); },
 									    height: 10,
 									  	fill: function(d) { return color(d);}				                           
@@ -259,7 +259,7 @@
 		                       			x: function(d,i){ 
 											   if (i ==0) return 0;
 											   else return (w-(margin.left/2))*i-10;},
-		                       			y: h-150,		         
+		                       			y: h-10,		         
 		                       			"font-size":"12px",
 		                       			"font-family":"sans-serif"              			
 		                       		});
