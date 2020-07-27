@@ -14,9 +14,9 @@
 	    	<svg id="barChart"></svg>
 	    </div>
 
-	    <div id="bottomLeft" style="float:left; width: 350px; margin-left: 50px;"></div>
-
-	    <div id="bottomRight" style="float:left; width: 400px;">
+	   
+		
+		<div id="bottomChart" style="float: left; width: 800px;">
 	    	<h2>Cases by State</h2>	    	    		
 	    </div>
     
@@ -72,7 +72,7 @@
 	                .interpolate("linear");
 	                
 	                
-	            var svg = d3.select("#bottomLeft").append("svg").attr({ width:w, height:h});
+	            var svg = d3.select("#topChart").append("svg").attr({ width:w, height:h});
 	            
 	            var viz = svg.append("path")
 	                        .attr({
@@ -87,7 +87,7 @@
 	          
 	        //show header
 	        function showHeader(ds) {
-	            d3.select("#bottomLeft").append("h2")
+	            d3.select("#topChart").append("h2")
 	                .text(ds.category + " Sales Trend (2013)");
 	        }
 	        
@@ -130,14 +130,14 @@
 		                                
 
 		            //Create SVG element
-		            var svg = d3.select("#bottomRight")
+		            var svg = d3.select("#bottomChart")
 		                        .append("svg")
 		                        .attr("width", w)
 		                        .attr("height", h);
 
 
 		            //Load in Sales Data
-		            d3.csv("2013-state-sales.csv", function(data) {
+		            d3.csv("us-states-positive.csv", function(data) {
 
 		                //Set input domain for color scale
 		                color.domain([0,d3.max(data, function(d) { return d.positive; })]);
@@ -258,7 +258,7 @@
 		                       		.attr({
 		                       			x: function(d,i){ 
 											   if (i ==0) return 0;
-											   else return (w-(margin.left/2))*i-20;},
+											   else return (w-(margin.left/2))*i-10;},
 		                       			y: h-150,		         
 		                       			"font-size":"12px",
 		                       			"font-family":"sans-serif"              			
