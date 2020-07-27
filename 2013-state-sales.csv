@@ -1,56 +1,49 @@
-state,cases
-Alabama,78130
-Alaska,2866
-Arizona,160055
-Arkansas,37981
-California,453327
-Colorado,43847
-Connecticut,48776
-Delaware,14175
-District of Columbia,11717
-Florida,414503
-Georgia,151262
-Guam,1306
-Hawaii,1597
-Idaho,17920
-Illinois,171669
-Indiana,63030
-Iowa,41886
-Kansas,25464
-Kentucky,27395
-Louisiana,103846
-Maine,3790
-Maryland,83617
-Massachusetts,115268
-Michigan,85665
-Minnesota,50331
-Mississippi,51097
-Missouri,42310
-Montana,3260
-Nebraska,24412
-Nevada,41993
-New Hampshire,6415
-New Jersey,180778
-New Mexico,18788
-New York,415911
-North Carolina,111366
-North Dakota,5740
-Northern Mariana Islands,40
-Ohio,83184
-Oklahoma,30081
-Oregon,16492
-Pennsylvania,111121
-Puerto Rico,14540
-Rhode Island,18224
-South Carolina,80008
-South Dakota,8305
-Tennessee,88459
-Texas,391609
-Utah,37623
-Vermont,1396
-Virgin Islands,352
-Virginia,83609
-Washington,53884
-West Virginia,5821
-Wisconsin,51735
-Wyoming,2446
+state,sales
+Alabama,305011
+Arizona,249114
+Arkansas,223888
+California,1372210
+Colorado,323632
+Connecticut,102924
+Delaware,10926
+Florida,777664
+Georgia,325852
+Idaho,217594
+Illinois,959327
+Indiana,466670
+Iowa,199228
+Kansas,257861
+Kentucky,153165
+Louisiana,173758
+MA,242051
+Maine,235917
+Maryland,347458
+Michigan,475171
+Minnesota,490010
+Mississippi,97624
+MO,256711
+Montana,76072
+Nebraska,116331
+Nevada,52063
+New Hampshire,95609
+New Jersey,328234
+New Mexico,158989
+New York,738894
+North Carolina,335759
+North Dakota,48158
+Ohio,729426
+Oklahoma,176368
+Oregon,354325
+Pennsylvania,357587
+Rhode Island,50820
+South Carolina,137837
+South Dakota,75173
+Tennessee,240461
+Texas,863891
+Utah,234200
+Vermont,99603
+Virginia,379201
+Washington,560356
+West Virginia,77018
+Wisconsin,314267
+Wyoming,51191
