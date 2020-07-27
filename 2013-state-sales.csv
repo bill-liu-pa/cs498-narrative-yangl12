@@ -1,4 +1,5 @@
 state,sales
+<<<<<<< HEAD
 Alabama,305011
 Arizona,249114
 Arkansas,223888
@@ -47,3 +48,60 @@ Washington,560356
 West Virginia,77018
 Wisconsin,314267
 Wyoming,51191
+=======
+Alabama,78130
+Alaska,2866
+Arizona,160055
+Arkansas,37981
+California,453327
+Colorado,43847
+Connecticut,48776
+Delaware,14175
+District of Columbia,11717
+Florida,414503
+Georgia,151262
+Guam,1306
+Hawaii,1597
+Idaho,17920
+Illinois,171669
+Indiana,63030
+Iowa,41886
+Kansas,25464
+Kentucky,27395
+Louisiana,103846
+Maine,3790
+Maryland,83617
+Massachusetts,115268
+Michigan,85665
+Minnesota,50331
+Mississippi,51097
+Missouri,42310
+Montana,3260
+Nebraska,24412
+Nevada,41993
+New Hampshire,6415
+New Jersey,180778
+New Mexico,18788
+New York,415911
+North Carolina,111366
+North Dakota,5740
+Northern Mariana Islands,40
+Ohio,83184
+Oklahoma,30081
+Oregon,16492
+Pennsylvania,111121
+Puerto Rico,14540
+Rhode Island,18224
+South Carolina,80008
+South Dakota,8305
+Tennessee,88459
+Texas,391609
+Utah,37623
+Vermont,1396
+Virgin Islands,352
+Virginia,83609
+Washington,53884
+West Virginia,5821
+Wisconsin,51735
+Wyoming,2446
+>>>>>>> 25431f50bdc35e9373663eb0f2f00fb1b09d4171
