@@ -49,14 +49,7 @@
 		//scales
 		
         var xScale =d3.time.scale()
-          .domain([
-            d3.min(ds.date, function (d) {
-              return Date(d.date);
-            }),
-            d3.max(ds.date, function (d) {
-              return Date(d.date);
-            })
-          ])
+          .domain([Date("2020-01-21") ,Date("2020-07-25")])
           .range([0, w])
           .nice();
 
