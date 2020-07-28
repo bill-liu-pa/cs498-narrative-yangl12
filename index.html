@@ -55,14 +55,8 @@
           .range([0, w])
           .nice();
 
-        var yScale = d3.scale
-          .linear()
-          .domain([
-            0,
-            d3.max(ds.positive, function (d) {
-              return d.positive;
-            }),
-          ])
+        var yScale = d3.scale.linear()
+          .domain([0,d3.max(ds.positive, function (d) {return d.positive;})])
           .range([h, 0])
           .nice();
 
