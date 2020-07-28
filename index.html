@@ -51,10 +51,10 @@
         var xScale =d3.time.scale()
           .domain([
             d3.min(ds.date, function (d) {
-              return d.date;
+              return Date(d.date);
             }),
             d3.max(ds.date, function (d) {
-              return d.date;
+              return Date(d.date);
             }),
           ])
           .range([0, w])
