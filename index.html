@@ -46,15 +46,15 @@
           w = 400 - margin.left - margin.right,
           h = 100 - margin.top - margin.bottom;
 
-        //scales
-        var xScale = d3.scale
-          .linear()
+		//scales
+		
+        var xScale =d3.time.scale()
           .domain([
-            d3.min(ds.monthlySales, function (d) {
-              return d.month;
+            d3.min(ds.date, function (d) {
+              return d.date;
             }),
-            d3.max(ds.monthlySales, function (d) {
-              return d.month;
+            d3.max(ds.date, function (d) {
+              return d.date;
             }),
           ])
           .range([0, w])
@@ -64,8 +64,8 @@
           .linear()
           .domain([
             0,
-            d3.max(ds.monthlySales, function (d) {
-              return d.sales;
+            d3.max(ds.positive, function (d) {
+              return d.positive;
             }),
           ])
           .range([h, 0])
@@ -74,10 +74,10 @@
         var lineFun = d3.svg
           .line()
           .x(function (d) {
-            return xScale(d.month);
+            return xScale(d.date);
           })
           .y(function (d) {
-            return yScale(d.sales);
+            return yScale(d.positive);
           })
           .interpolate("linear");
 
@@ -87,7 +87,7 @@
           .attr({ width: w, height: h });
 
         var viz = svg.append("path").attr({
-          d: lineFun(ds.monthlySales),
+          d: lineFun(ds),
           stroke: "#666666",
           "stroke-width": 2,
           fill: "none",
