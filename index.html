@@ -96,7 +96,9 @@
       d3.json("us.csv", function (error, data) {
         if (error) {
           console.log(error);
-        }
+		}
+		console.log("heloo");
+
         console.log(data);
 
         buildLine(data);
