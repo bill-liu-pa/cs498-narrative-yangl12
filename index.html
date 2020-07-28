@@ -37,6 +37,9 @@
     </script>
 
     <script>
+
+	const tParser = d3.timeParse("%Y-%m-%d");
+	
       function buildLine(ds) {
 		console.log("in build line");
 
@@ -47,9 +50,8 @@
           h = 100 - margin.top - margin.bottom;
 
 		//scales
-		
         var xScale =d3.time.scale()
-          .domain([Date("2020-01-21") ,Date("2020-07-25")])
+          .domain([tParser("2020-01-21") ,tParser("2020-07-25")])
           .range([0, w])
           .nice();
 
@@ -67,7 +69,7 @@
         var lineFun = d3.svg
           .line()
           .x(function (d) {
-            return xScale(d.date);
+            return xScale(tParser(d.date));
           })
           .y(function (d) {
             return yScale(d.positive);
