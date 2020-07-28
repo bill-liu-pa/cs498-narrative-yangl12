@@ -43,13 +43,10 @@
 	const tParser = d3.timeParse("%Y-%m-%d");
 	
       function buildLine(ds) {
-		console.log("in build line");
-
-		console.log(ds);
 
         var margin = { top: 20, right: 30, bottom: 30, left: 40 },
-          w = 400 - margin.left - margin.right,
-          h = 100 - margin.top - margin.bottom;
+          w = 800 - margin.left - margin.right,
+          h = 400 - margin.top - margin.bottom;
 
 		//scales
         var xScale =d3.time.scale()
@@ -102,7 +99,7 @@
     <script>
       var margin = { top: 20, right: 30, bottom: 30, left: 40 },
         w = 800 - margin.left - margin.right,
-        h = 600 - margin.top - margin.bottom;
+        h = 500 - margin.top - margin.bottom;
 
       var projection = d3.geo
         .albersUsa()
