@@ -11,6 +11,12 @@
   <body>
     <h1 id="dashTitle">Covid-19 Dashboard</h1>
 
+	<div id="topChart" style="float: left; width: 800px;">
+		<h2 style="margin-left:50px; float:left;">Sales by Month (colored by profit)</h1>				
+		<svg id="barChartLegend"></svg>
+		<svg id="barChart"></svg>
+	</div>
+
     <div id="bottomChart" style="float: left; width: 800px;">
       <h2>Cases by State</h2>
     </div>
@@ -72,7 +78,7 @@
           .interpolate("linear");
 
         var svg = d3
-          .select("#bottomLeft")
+          .select("#topChart")
           .append("svg")
           .attr({ width: w, height: h });
 
@@ -84,12 +90,7 @@
         });
       }
 
-      //show header
-      function showHeader(ds) {
-        d3.select("#bottomLeft")
-          .append("h2")
-          .text(ds.category + " Sales Trend (2013)");
-      }
+   
 
       //get data and draw things
       d3.json("us.csv", function (error, data) {
