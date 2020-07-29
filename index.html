@@ -78,24 +78,23 @@
           "stroke-width": 2,
           fill: "none",
         });
+
+        svg
+          .append("g")
+          .attr("transform", "translate(50,50)")
+          .call(d3.axisLeft(yScale));
+        svg
+          .append("g")
+          .attr("transform", "translate(50,250)")
+          .call(d3.axisBottom(xScale));
       }
 
       //get data and draw things
       d3.csv("us-positive.csv", function (data) {
         buildLine(data);
-        buildAxis();
       });
 
-      function buildAxis() {
-        d3.select("svg")
-          .append("g")
-          .attr("transform", "translate(50,50)")
-          .call(d3.axisLeft(yScale));
-        d3.select("svg")
-          .append("g")
-          .attr("transform", "translate(50,250)")
-          .call(d3.axisBottom(xScale));
-      }
+      function buildAxis() {}
     </script>
 
     <!-- build map -->
