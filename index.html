@@ -79,14 +79,9 @@
           fill: "none",
         });
 
-        svg
-          .append("g")
-          .attr("transform", "translate(50,50)")
-          .call(d3.axisLeft(yScale));
-        svg
-          .append("g")
-          .attr("transform", "translate(50,360)")
-          .call(d3.axisBottom(xScale));
+        svg.axis().orient("left").scale(yScale);
+
+        svg.axis().orient("bottom").scale(xScale);
       }
 
       //get data and draw things
