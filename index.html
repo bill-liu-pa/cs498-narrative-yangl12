@@ -26,7 +26,7 @@
       }
     </script>
 
-    <h1 id="dashTitle">Covid-19 Dashboard</h1>
+    <h1 id="dashTitle">Covid-19 Dashboard!</h1>
 
     <div id="topChart" style="float: left; width: 800px;">
       <h2 style="margin-left: 50px; float: left;">Cases by date</h2>
@@ -79,15 +79,13 @@
           fill: "none",
         });
 
-        svg
-          .append("g")
-          .attr("transform", "translate(50,50)")
-          .call(d3.axisLeft(yScale));
-        d3.select("svg");
-        svg
-          .append("g")
-          .attr("transform", "translate(50,360)")
-          .call(d3.axisBottom(xScale));
+        var xAxis = d3.svg.axis().scale(xScale).tickSize(-h);
+
+        var yAxis = d3.svg.axis().scale(yScale).ticks(4).orient("left");
+
+        svg.append("g").attr("transform", "translate(50,50)").call(yAxis);
+
+        svg.append("g").attr("transform", "translate(50,360)").call(xAxis);
 
         //        svg.axis().orient("left").scale(yScale);
 
