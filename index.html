@@ -131,17 +131,17 @@
         // solution based on idea here: https://groups.google.com/forum/?fromgroups#!topic/d3-js/heOBPQF3sAY
         // first move the text left so no longer centered on the tick
         // then rotate up to get 45 degrees.
-        vis
-          .selectAll(".xaxis text") // select all the text elements for the xaxis
-          .attr("transform", function (d) {
-            return (
-              "translate(" +
-              this.getBBox().h * -2 +
-              "," +
-              this.getBBox().h +
-              ")rotate(-45)"
-            );
-          });
+        // vis
+        //   .selectAll(".xaxis text") // select all the text elements for the xaxis
+        //   .attr("transform", function (d) {
+        //     return (
+        //       "translate(" +
+        //       this.getBBox().h * -2 +
+        //       "," +
+        //       this.getBBox().h +
+        //       ")rotate(-45)"
+        //     );
+        //   });
 
         // var xAxis = d3.svg.axis().scale(xScale).ticks(20).orient("bottom");
 
