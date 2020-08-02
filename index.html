@@ -26,12 +26,12 @@
 
     <h1 id="dashTitle">Covid-19 Cases: United States of America</h1>
     <div id="Instruction" style="float: left; height: 30; width: 800px;">
-      <h4>Mouse over the map to see the information for states</h4>
+      <h5>Mouse over the map to see the information for states</h5>
     </div>
     <div id="padding2" style="float: left; height: 5; width: 800px;"></div>
 
     <div id="Annotation" style="float: left; height: 30; width: 800px;">
-      <h3>There are total 4190422 cases up to July 25. 2020</h4>
+      <h3>There are total 4190422 cases up to July 25. 2020</h3>
     </div>
     <div id="padding2" style="float: left; height: 20; width: 800px;"></div>
 
@@ -106,7 +106,7 @@
             .attr("id", "mapTooltip")
             .style("opacity", 0);
 
-          var anno = d3.select("#annotation")
+          var anno = d3.select("#annotation");
 
           //Build Map
           svg
@@ -142,26 +142,28 @@
                 .style("left", d3.event.pageX + "px")
                 .style("top", d3.event.pageY - 28 + "px");
 
-                if( d.properties.NAME == "California" ||
-              d.properties.NAME == "Texas" ||
-              d.properties.NAME == "New York" ||
-              d.properties.NAME == "Florida" 
-              ){
+              if (
+                d.properties.NAME == "California" ||
+                d.properties.NAME == "Texas" ||
+                d.properties.NAME == "New York" ||
+                d.properties.NAME == "Florida"
+              ) {
                 var txt = "<h3> <strong>" + d.properties.NAME + "</strong>";
-                txt = txt + " is one of the four states that has more than 400k cases.</h3>"
-              }
-              else {
-                var txt = "<h3>There are total 4190422 cases up to July 25. 2020</h4>";
+                txt =
+                  txt +
+                  " is one of the four states that has more than 400k cases.</h3>";
+              } else {
+                var txt =
+                  "<h3>There are total 4190422 cases up to July 25. 2020</h4>";
               }
               anno.html(txt);
-
             })
             .on("mouseout", function (d) {
               mapTooltip.transition().duration(500).style("opacity", 0);
 
-            var annotxt = "<h3>There are total 4190422 cases up to July 25. 2020</h4>";
-                annotxt.html(annotxt);
-
+              var annotxt =
+                "<h3>There are total 4190422 cases up to July 25. 2020</h3>";
+              annotxt.html(annotxt);
             });
 
           //sort values for color legend
